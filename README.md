@@ -48,25 +48,6 @@ Apesar do projeto estar em **paradigma procedural**, as entidades ainda são rep
 
 ---
 
-## 🏗️ Estrutura Modular (Procedural)
-
-project-root/
-│── main.py # Ponto de entrada do app (Flet)
-│── ui/ # Interface gráfica
-│ └── screens.py # Telas e layouts principais
-│── core/ # Regras do domínio (procedural)
-│ ├── user.py # Manipulação de usuários
-│ ├── meta.py # Manipulação de metas
-│ └── timer.py # Lógica de contagem de tempo
-│── storage/ # Persistência local
-│ └── repository.py # Leitura/Escrita em JSON ou SQLite
-└── docs/ # Documentação do projeto
-
-yaml
-Copiar código
-
----
-
 ## 💾 Persistência
 
 Banco local: **SQLite (sqlite3)** ou **JSON** para simplicidade inicial.
