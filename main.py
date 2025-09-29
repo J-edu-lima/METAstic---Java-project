@@ -31,7 +31,7 @@ class SistemaMetas:
                 self.mostrar_titulo()
                 nome, tempo, estado, progresso = meta.get_descricao()
                 print(f"{nome}: {estado}, progresso {progresso}/{tempo}")
-                print("Comandos: [P]ausar, [R]etomar, [S]top, [Q]uit painel")
+                print("Comandos: [P]ausar, [R]etomar, [Q]uit painel")
 
                 if msvcrt.kbhit():
                     key = msvcrt.getwch().lower()
@@ -39,8 +39,6 @@ class SistemaMetas:
                         meta.pausar()
                     elif key == "r":
                         meta.retomar()
-                    elif key == "s":
-                        meta.parar()
                     elif key == "q":
                         meta.pausar()
                         self.menu_principal()
