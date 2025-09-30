@@ -18,7 +18,7 @@ class SistemaMetas:
         print("||S |||i |||s |||t |||e |||m |||a |||       |||d |||e |||       |||M |||e |||t |||a |||s |||       ||")
         print("||__|||__|||__|||__|||__|||__|||__|||_______|||__|||__|||_______|||__|||__|||__|||__|||__|||_______||")
         print("|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/_______\\|/__\\|/__\\|/_______\\|/__\\|/__\\|/__\\|/__\\|/__\\|/_______\\|")
-        print("Painel Geral do Sistema de Metas - Sistema v0.3\n")
+        print("Painel Geral do Sistema de Metas - Sistema v0.5\n")
 
     # ------------------------------
     # Painel interativo de uma meta
@@ -42,9 +42,9 @@ class SistemaMetas:
                     elif key == "q":
                         meta.pausar()
                         self.menu_principal()
+
                 time.sleep(1)
         finally:
-            meta.parar()
             print(f"\nMeta '{meta._nome}' finalizada ou painel fechado.")
             time.sleep(1)
 
@@ -58,9 +58,9 @@ class SistemaMetas:
 
             if self.usuario.get_metas():
                 print("Metas cadastradas:")
-                for index, m in enumerate(self.usuario.get_metas()):
-                    nome, tempo, estado, progresso = m.get_descricao()
-                    print(f" - [N° {index}] {nome}: {estado}, progresso {progresso}/{tempo}")
+                for chave, valor in self.usuario.get_metas().items():
+                    nome, tempo, estado, progresso = valor.get_descricao()
+                    print(f" - [N° {chave}] {nome}: {estado}, progresso {progresso}/{tempo}")
             else:
                 print("Nenhuma meta cadastrada.")
 
@@ -95,9 +95,13 @@ class SistemaMetas:
                     else:
                         print("\nEntrada inválida - Digite o NÚMERO referente a meta")
                 try:
-                    self.usuario.get_metas()[int(posicao)]
-                    self.rodar_meta(meta)
-                except IndexError:
+                    meta = self.usuario.get_metas()[int(posicao)]
+                    if meta._estado == Estado.CONCLUIDA:
+                        print("Essa meta já foi concluída")
+                        time.sleep(2)
+                    else:    
+                        self.rodar_meta(meta)
+                except KeyError:
                     print("❌ Meta não encontrada.")
                     time.sleep(2)
 
@@ -109,17 +113,15 @@ class SistemaMetas:
                     else:
                         print("\nEntrada inválida - Digite o NÚMERO referente a meta")
                 try:
-                    meta = self.usuario.get_metas()[int(posicao)]
-                    self.usuario.excluir_meta(meta)
-                    self.usuario.get_metas()
+                    self.usuario.excluir_meta(int(posicao)) 
                 except IndexError:
                     print("❌ Meta não encontrada.")
                     time.sleep(2)
 
             elif opc == "e":
                 print("Saindo do sistema...")
-                for m in self.usuario.get_metas():
-                    m.parar()
+                for chave, valor in self.usuario.get_metas().items():
+                    valor.pausar()
                 break
 
             else:
